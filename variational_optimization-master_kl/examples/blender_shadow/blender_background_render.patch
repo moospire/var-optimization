@@ -1,0 +1,26 @@
+diff --git a/source/blender/compositor/operations/COM_PreviewOperation.h b/source/blender/compositor/operations/COM_PreviewOperation.h
+index 5da7a25..5f538a0 100644
+--- a/source/blender/compositor/operations/COM_PreviewOperation.h
++++ b/source/blender/compositor/operations/COM_PreviewOperation.h
+@@ -45,7 +45,7 @@ public:
+ 	PreviewOperation(const ColorManagedViewSettings *viewSettings, const ColorManagedDisplaySettings *displaySettings);
+ 	void verifyPreview(bNodeInstanceHash *previews, bNodeInstanceKey key);
+ 	
+-	bool isOutputOperation(bool /*rendering*/) const { return !G.background; }
++	bool isOutputOperation(bool /*rendering*/) const { return true; }
+ 	void initExecution();
+ 	void deinitExecution();
+ 	const CompositorPriority getRenderPriority() const;
+diff --git a/source/blender/compositor/operations/COM_ViewerOperation.h b/source/blender/compositor/operations/COM_ViewerOperation.h
+index 107aee3..508430a 100644
+--- a/source/blender/compositor/operations/COM_ViewerOperation.h
++++ b/source/blender/compositor/operations/COM_ViewerOperation.h
+@@ -55,7 +55,7 @@ public:
+ 	void initExecution();
+ 	void deinitExecution();
+ 	void executeRegion(rcti *rect, unsigned int tileNumber);
+-	bool isOutputOperation(bool /*rendering*/) const { if (G.background) return false; return isActiveViewerOutput(); }
++	bool isOutputOperation(bool /*rendering*/) const { return isActiveViewerOutput(); }
+ 	void setImage(Image *image) { this->m_image = image; }
+ 	void setImageUser(ImageUser *imageUser) { this->m_imageUser = imageUser; }
+ 	const bool isActiveViewerOutput() const { return this->m_active; }

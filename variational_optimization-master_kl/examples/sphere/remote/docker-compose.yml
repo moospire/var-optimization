@@ -1,0 +1,25 @@
+version: "3.2"
+services:
+  sphere:
+    image: grpc/python:1.4
+    volumes:
+      - .:/usr/src/myapp
+    working_dir: /usr/src/myapp
+    command: "python server.py"
+    deploy:
+        replicas: 5
+        endpoint_mode: dnsrr
+    networks:
+      - spherenet
+  sphererelay:
+    image: grpc/python:1.4
+    volumes:
+      - .:/usr/src/myapp
+    working_dir: /usr/src/myapp
+    command: "python relay.py"
+    ports:
+      - "50051:50051"
+    networks:
+      - spherenet
+networks:
+  spherenet:

@@ -1,0 +1,30 @@
+// use this to compile (in this directory):
+// requires pip install grpcio-tools
+// python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. sphere.proto
+syntax = "proto3";
+
+// split out general structures using imports
+package sphere_worker;
+
+message Numpy {
+  string dtype = 1;
+  repeated int32 shape = 2;
+  bytes data = 3;
+}
+
+message Request {
+  string id = 1;
+  Numpy x = 2;
+  int32 fixed_param = 3;
+  float var_param_1 = 4;
+  float var_param_2 = 5;
+}
+
+message Response {
+  string id = 1;
+  Numpy x = 2;
+}
+
+service Sphere {
+  rpc GetVal(Request) returns (Response) {}
+}

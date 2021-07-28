@@ -1,0 +1,28 @@
+version: "3.2"
+services:
+  blendershadow:
+    image: blender-shadow-worker:latest
+    volumes:
+      - .:/home/docker
+    working_dir: /home/docker
+    command: "'/usr/local/blender/blender cube_pos_test.blend --background --python server.py'"
+    deploy:
+        replicas: 10
+        endpoint_mode: dnsrr
+    networks:
+      - blendershadownet
+  blenderrelay:
+    image: grpc/python:1.4
+    volumes:
+      - .:/usr/src/myapp
+    working_dir: /usr/src/myapp
+    command: "python relay.py"
+    ports:
+      - "50051:50051"
+    networks:
+      - blendershadownet
+
+networks:
+  blendershadownet:
+    driver: overlay
+    attachable: true
