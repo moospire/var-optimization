@@ -6,10 +6,11 @@ scipy 1.2.1
 pillow 6.1.0
 sk.learn
 
+
 to run:
 option 1:
   open the library in an ide
-  navigate to sphere
+  navigate to sphere (examples/sphere)
   run sphere.py
   
 option 2:
